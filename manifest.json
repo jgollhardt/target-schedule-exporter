@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
 
-  "name": "Target Calender Exporter",
-  "description": "This extension grabs the calendar data from Target's employee selfservice website and puts in in Google Calendar.",
+  "name": "Target Schedule Exporter",
+  "description": "This extension grabs the calendar data from Target's employee selfservice website and puts it in Google Calendar.",
   "version": "1.0",
 
   "browser_action": {
@@ -11,11 +11,15 @@
   "permissions": [
     "activeTab"
   ],
+  "background": {
+    "scripts": ["gapi_setup.js"]
+  },
   "content_scripts": [
     {
       "matches": ["https://wss.target.com/selfservice/home/viewSchedule.do/*"],
       // "matches": ["file:///D:/github/jgollhardt/My%20Schedule.html"],
       "js": ["fetch_data.js"]
     }
-  ]
+  ],
+  "content_security_policy": "script-src 'self' https://apis.google.com; object-src 'self'"
 }
