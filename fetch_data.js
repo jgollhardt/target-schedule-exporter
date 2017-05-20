@@ -1,3 +1,31 @@
+// The OAuth 2 parts of the gapi client don't seem to work from a Chrome extension (https://github.com/google/google-api-javascript-client/issues/64)
+// To get around that, inject the gapi library onto the page (http://stackoverflow.com/a/9517879)
+var s = document.createElement('script');
+s.src = chrome.runtime.getURL('api.js');
+s.onload = function() {
+  this.remove();
+};
+(document.head || document.documentElement).appendChild(s);
+
+// Inject gapi setup
+var s2 = document.createElement('script');
+s2.src = chrome.runtime.getURL('gapi_setup.js');
+s2.onload = function() {
+  // get Google client id from config
+  var configURL = chrome.runtime.getURL('config.json');
+  fetch(configURL).then(function(response) {
+    return response.json();
+  }).then(function(config) {
+    // initialize the gapi client, passing along the client id
+    var event = new CustomEvent("handleClientLoad", {detail: config.CLIENT_ID});
+    window.dispatchEvent(event);
+  });
+  
+  this.remove();
+};
+(document.head || document.documentElement).appendChild(s2);
+
+
 // Grab the table containing schedule data
 var rows = document.getElementsByClassName("request_table_bordered")[0].rows;
 

@@ -1,15 +1,25 @@
-// Inject gapi library onto the page
-// http://stackoverflow.com/a/18682135
-var head = document.getElementsByTagName('head')[0];
-var script = document.createElement('script');
-script.type = 'text/javascript';
-script.src = "https://apis.google.com/js/api.js?onload=handleClientLoad";
-head.appendChild(script);
+var authorizeButton = document.createElement('button');
+authorizeButton.id = "authorize-button";
+authorizeButton.onclick = handleAuthClick;
+var authorizeText = document.createTextNode("Auhorize me!");
+authorizeButton.appendChild(authorizeText);
 
-// Client ID and API key from the Developer Console
-var CLIENT_ID = '<YOUR_CLIENT_ID>';
+var signoutButton = document.createElement('button');
+signoutButton.id = "signout-button";
+signoutButton.onclick = handleSignoutClick;
+var signoutText = document.createTextNode("Sign out");
+signoutButton.appendChild(signoutText);
 
-// Array of API discovery doc URLs for APIs used by the quickstart
+
+var tmp = document.createElement('pre');
+tmp.id = 'content';
+
+var body = document.getElementsByTagName("body")[0];
+body.appendChild(authorizeButton);
+body.appendChild(signoutButton);
+body.appendChild(tmp);
+
+// Array of API discovery doc URLs for APIs used
 var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
 
 // Authorization scopes required by the API; multiple scopes can be
@@ -41,8 +51,6 @@ function initClient() {
 
     // Handle the initial sign-in state.
     updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-    authorizeButton.onclick = handleAuthClick;
-    signoutButton.onclick = handleSignoutClick;
   });
 }
 
@@ -111,10 +119,15 @@ function listUpcomingEvents() {
         if (!when) {
           when = event.start.date;
         }
-        appendPre(event.summary + ' (' + when + ')')
+        appendPre(event.summary + ' (' + when + ')');
       }
     } else {
       appendPre('No upcoming events found.');
     }
   });
 }
+
+window.addEventListener("handleClientLoad", function(evt) {
+  this.CLIENT_ID = evt.detail;
+  handleClientLoad();
+}, false);

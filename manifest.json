@@ -8,18 +8,11 @@
   "browser_action": {
     "default_icon": "icon.png"
   },
-  "permissions": [
-    "activeTab"
-  ],
-  "background": {
-    "scripts": ["gapi_setup.js"]
-  },
   "content_scripts": [
     {
       "matches": ["https://wss.target.com/selfservice/home/viewSchedule.do/*"],
-      // "matches": ["file:///D:/github/jgollhardt/My%20Schedule.html"],
       "js": ["fetch_data.js"]
     }
   ],
-  "content_security_policy": "script-src 'self' https://apis.google.com; object-src 'self'"
+  "web_accessible_resources": ["api.js", "gapi_setup.js", "config.json"]
 }
