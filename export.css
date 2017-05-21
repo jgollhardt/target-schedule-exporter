@@ -1,0 +1,31 @@
+.btn-group {
+  text-align: center;
+}
+
+.btn-group button {
+  margin: auto;
+  margin-top: 10px;
+  display: block;
+  padding: 10px 20px;
+}
+
+.exportButton {
+  width: 160px;
+  height: 120px;
+  background: url("https://68.media.tumblr.com/040d77e95e37f05fbc14b0b8ae3d3177/tumblr_opsismTLqh1vghf22o1_400.gif");
+  background-size: 160px 120px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.exportText {
+  position: relative;
+  top: 40px;
+  color: pink;
+}
+
+.exportList {
+  text-align: left;
+  list-style-type: none;
+  display: inline-block;
+}

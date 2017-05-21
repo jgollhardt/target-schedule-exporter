@@ -11,7 +11,8 @@
   "content_scripts": [
     {
       "matches": ["https://wss.target.com/selfservice/home/viewSchedule.do/*"],
-      "js": ["fetch_data.js"]
+      "css": ["export.css"],
+      "js": ["export.js"]
     }
   ],
   "web_accessible_resources": ["api.js", "gapi_setup.js", "config.json"]

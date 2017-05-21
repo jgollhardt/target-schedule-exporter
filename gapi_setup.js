@@ -1,22 +1,10 @@
-var authorizeButton = document.createElement('button');
-authorizeButton.id = "authorize-button";
-authorizeButton.onclick = handleAuthClick;
-var authorizeText = document.createTextNode("Auhorize me!");
-authorizeButton.appendChild(authorizeText);
 
-var signoutButton = document.createElement('button');
-signoutButton.id = "signout-button";
-signoutButton.onclick = handleSignoutClick;
-var signoutText = document.createTextNode("Sign out");
-signoutButton.appendChild(signoutText);
 
 
 var tmp = document.createElement('pre');
 tmp.id = 'content';
 
 var body = document.getElementsByTagName("body")[0];
-body.appendChild(authorizeButton);
-body.appendChild(signoutButton);
 body.appendChild(tmp);
 
 // Array of API discovery doc URLs for APIs used
@@ -44,6 +32,8 @@ function initClient() {
 
     // Handle the initial sign-in state.
     updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+    authorizeButton.onclick = handleAuthClick;
+    signoutButton.onclick = handleSignoutClick;
   });
 }
 
@@ -82,15 +72,16 @@ function handleSignoutClick(event) {
  * @param {string} message Text to be placed in pre element.
  */
 function appendPre(message, link) {
-  var pre = document.getElementById('content');
-  var textContent = document.createTextNode('\n' + message);
+  var pre = document.getElementById("exportList");
+  var li = document.createElement('li');
+  li.innerHTML = message;
   var htmlContent = document.createElement('a');
   htmlContent.href = link;
   htmlContent.innerHTML = link;
   htmlContent.target = "_blank";
 
-  pre.appendChild(textContent);
-  pre.appendChild(htmlContent);
+  li.appendChild(htmlContent);
+  pre.appendChild(li);
 }
 
 /**
@@ -113,7 +104,7 @@ function insertEvent(evt) {
   });
 
   request.execute(function(event) {
-    appendPre('Event created: ', event.htmlLink);
+    appendPre('Calendar event created: ', event.htmlLink);
   });
 }
 

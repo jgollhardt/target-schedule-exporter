@@ -27,7 +27,8 @@ s2.onload = function() {
 
 
 // Grab the table containing schedule data
-var rows = document.getElementsByClassName("request_table_bordered")[0].rows;
+var table = document.getElementsByClassName("request_table_bordered")[0];
+var rows = table.rows;
 
 // array of dates, will match indices with the shift info row
 var dates = [];
@@ -81,12 +82,39 @@ for (var i = 1; i < hours.length; i++) {
   }
 }
 
-// Button to import all calendar data
-var button = document.createElement("button");
-button.innerHTML = "Export to Google Calendar";
-button.onclick = insertShifts;
-var body = document.getElementsByTagName("body")[0];
-body.appendChild(button);
+// Button to export all calendar data
+var div = document.createElement("div");
+div.className = "btn-group";
+var exportButton = document.createElement("button");
+exportButton.className = "exportButton";
+exportButton.onclick = insertShifts;
+var exportText = document.createElement("p");
+exportText.className = "exportText"
+exportText.innerHTML = "Export to Google Calendar!!!";
+exportButton.appendChild(exportText);
+
+// Buttons to authorize with Google
+var authorizeButton = document.createElement('button');
+authorizeButton.id = "authorize-button";
+var authorizeText = document.createTextNode("Auhorize me!");
+authorizeButton.appendChild(authorizeText);
+
+// Button to sign out of Google
+var signoutButton = document.createElement('button');
+signoutButton.id = "signout-button";
+var signoutText = document.createTextNode("Sign out");
+signoutButton.appendChild(signoutText);
+
+var exportList = document.createElement('ul');
+exportList.id = "exportList";
+exportList.className = "exportList";
+
+div.appendChild(exportButton);
+div.appendChild(authorizeButton);
+div.appendChild(signoutButton);
+div.appendChild(exportList);
+table.parentNode.insertBefore(div, table.nextSibling);
+
 
 function insertShifts() {
   shiftEvents.forEach(function(entry) {
