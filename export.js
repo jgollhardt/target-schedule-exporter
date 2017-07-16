@@ -34,6 +34,7 @@ var rows = table.rows;
 var dates = [];
 // Grab date information from the first row
 var days = rows[0].cells;
+// The row starts with an empty cell
 for (var i = 1; i < days.length; i++) {
   var dateCell = days[i].innerText.trim();
   // Splits the text into ["day", "date"]
@@ -46,6 +47,7 @@ for (var i = 1; i < days.length; i++) {
 // If a shift exists, match it with the date collected aboves
 var shiftEvents = [];
 var hours = rows[2].cells;
+// The row starts with an empty cell
 for (var i = 1; i < hours.length; i++) {
   var shiftCell = hours[i].innerText.trim();
   // If there's a shift
@@ -62,8 +64,9 @@ for (var i = 1; i < hours.length; i++) {
     shift.forEach(function(time, index, array) {
       array[index] = time.slice(0, -2) + " " + time.slice(-2);
     });
-    var shiftBegin = new Date(dates[i] + " " + shift[0]);
-    var shiftEnd = new Date(dates[i] + " " + shift[1]);
+    // i-1 because the dates array started at 0, while this loop started at 1
+    var shiftBegin = new Date(dates[i-1] + " " + shift[0]);
+    var shiftEnd = new Date(dates[i-1] + " " + shift[1]);
 
     var shiftEvent = {
       'summary': dept,
