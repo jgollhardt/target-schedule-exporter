@@ -12,7 +12,7 @@
 .exportButton {
   width: 160px;
   height: 120px;
-  background: url("https://68.media.tumblr.com/040d77e95e37f05fbc14b0b8ae3d3177/tumblr_opsismTLqh1vghf22o1_400.gif");
+  background-image:url('chrome-extension://__MSG_@@extension_id__/images/nyan_cat.gif');
   background-size: 160px 120px;
   cursor: pointer;
   font-weight: bold;
